@@ -7,7 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "myquizapp",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    // "newArchEnabled": true,  <-- این خط حذف شد یا به false تغییر یافت
     "ios": {
       "supportsTablet": true
     },
