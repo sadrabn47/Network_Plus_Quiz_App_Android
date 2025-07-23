@@ -1,0 +1,52 @@
+# نام Workflow
+name: EAS Build Android APK
+
+# زمان‌هایی که Workflow اجرا می‌شود
+on:
+  push:
+    branches:
+      - master # چون شاخه شما master است، اینجا را master قرار دهید
+
+# شغل‌ها (Jobs)
+jobs:
+  build:
+    # سیستم عامل برای اجرای شغل
+    runs-on: ubuntu-latest
+
+    # مراحل (Steps) شغل
+    steps:
+      # ۱. Checkout کردن کد مخزن
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ۲. تنظیم Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x # از نسخه Node.js مناسب برای پروژه خود استفاده کنید (معمولا 18.x یا 20.x)
+
+      # ۳. نصب Expo CLI و EAS CLI
+      - name: Install Expo CLI and EAS CLI
+        run: npm install -g expo-cli eas-cli
+
+      # ۴. نصب وابستگی‌های پروژه
+      - name: Install project dependencies
+        run: npm install
+
+      # ۵. ورود به EAS (با استفاده از توکن ذخیره شده در GitHub Secrets)
+      - name: Log in to EAS
+        run: eas login --token=${{ secrets.EXPO_TOKEN }}
+
+      # ۶. ساخت فایل APK برای اندروید
+      # --non-interactive: برای جلوگیری از درخواست‌های تعاملی در محیط CI
+      # --local false: ساخت روی سرورهای Expo انجام می‌شود و فایل APK به صورت مستقیم دانلود نمی‌شود.
+      - name: Build Android APK
+        run: eas build --platform android --non-interactive --local false
+
+      # ۷. (اختیاری) نمایش لینک دانلود APK در خروجی
+      # EAS CLI به طور خودکار لینک دانلود را در انتهای اجرای eas build نمایش می‌دهد.
+      # این مرحله فقط برای اطمینان از نمایش آن در لاگ‌های GitHub Actions است.
+      - name: Get build URL
+        run: |
+          echo "Please check the logs of the 'Build Android APK' step for the download link."
+          echo "The link will look something like: https://expo.dev/artifacts/..."
