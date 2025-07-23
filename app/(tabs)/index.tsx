@@ -1293,6 +1293,8 @@ const styles = (colors: typeof lightTheme) => StyleSheet.create({
       fontSize: 15,
       color: colors.text,
       marginTop: 10,
-      fontWeight: '500',
+      fontWeight: '500'   ,
   }
 });
+
+
