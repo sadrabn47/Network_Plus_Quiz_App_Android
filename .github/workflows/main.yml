@@ -39,8 +39,9 @@ jobs:
 
       # ۵. ساخت فایل APK برای اندروید
         # EAS CLI به طور خودکار EXPO_TOKEN را از متغیرهای محیطی تشخیص می‌دهد.
+        # --local false حذف شد، چون پیش‌فرض ساخت روی سرورهای EAS است.
       - name: Build Android APK
-        run: eas build --platform android --non-interactive --local false
+        run: eas build --platform android --non-interactive
 
       # ۶. (اختیاری) نمایش لینک دانلود APK در خروجی
       # EAS CLI به طور خودکار لینک دانلود را در انتهای اجرای eas build نمایش می‌دهد.
